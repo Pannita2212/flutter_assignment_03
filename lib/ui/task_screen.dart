@@ -62,12 +62,12 @@ class _TaskScreen extends State<TaskScreen> {
             }
             _TaskScreen.id_doc = new List<String>();
 
-            List<Todo> notdone = new List<Todo>();
+            List<Todo> task = new List<Todo>();
             List<Todo> done = new List<Todo>();
             for (int i = 0; i < snapshot.data.documents.length; i++) {
               var item = snapshot.data.documents[i];
               if (item['done'] == 0) {
-                notdone.add(new Todo(
+                task.add(new Todo(
                     id: item.documentID,
                     title: item['title'],
                     done: item['done']));
@@ -79,7 +79,7 @@ class _TaskScreen extends State<TaskScreen> {
                     done: item['done']));
               }
             }
-            if ((notdone.length == 0 && index == 0) ||
+            if ((task.length == 0 && index == 0) ||
                 (done.length == 0 && index == 1)) {
               return Center(
                 child: Text("No data found"),
@@ -87,9 +87,9 @@ class _TaskScreen extends State<TaskScreen> {
             }
 
             return ListView.builder(
-              itemCount: index == 0 ? notdone.length : done.length,
+              itemCount: index == 0 ? task.length : done.length,
               itemBuilder: (BuildContext context, int i) {
-                Todo item = index == 0 ? notdone[i] : done[i];
+                Todo item = index == 0 ? task[i] : done[i];
                 return ListTile(
                   title: Text(item.title),
                   trailing: Checkbox(
@@ -111,7 +111,7 @@ class _TaskScreen extends State<TaskScreen> {
           }
         },
       ),
-      
+
       bottomNavigationBar: new Theme(
         data: Theme.of(context).copyWith(
           canvasColor: Colors.brown[100],
